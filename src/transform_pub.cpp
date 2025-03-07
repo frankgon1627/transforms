@@ -10,7 +10,7 @@ public:
     {
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-          "/Odometry", 10, std::bind(&StaticTransformPublisher::odom_callback, this, std::placeholders::_1));
+          "/dlio/odom_node/odom", 10, std::bind(&StaticTransformPublisher::odom_callback, this, std::placeholders::_1));
 
         publish_lidar_transform();
     }
