@@ -12,7 +12,7 @@ public:
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
         static_tf_broadcaster_ = std::make_shared<tf2_ros::StaticTransformBroadcaster>(this);
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
-          "/dlio/odom_node/odom", 10, std::bind(&StaticTransformPublisher::odom_callback, this, std::placeholders::_1));
+            "/dlio/odom_node/odom", 10, std::bind(&StaticTransformPublisher::odom_callback, this, std::placeholders::_1));
 
         publish_lidar_transform();
     }
@@ -38,8 +38,8 @@ private:
         // Set rotation (quaternion)
         lidar_transform.transform.rotation.x = 0.0;
         lidar_transform.transform.rotation.y = 0.0;
-        lidar_transform.transform.rotation.z = 0.0;
-        lidar_transform.transform.rotation.w = 1.0;
+        lidar_transform.transform.rotation.z = 1.0;
+        lidar_transform.transform.rotation.w = 0.0;
 
         // Broadcast the transform
         static_tf_broadcaster_->sendTransform(lidar_transform);
@@ -55,8 +55,8 @@ private:
         map_transform.child_frame_id = "base_link";   // Child frame
 
         // Set translation (x, y, z)
-        map_transform.transform.translation.x = -odom_->pose.pose.position.x;
-        map_transform.transform.translation.y = -odom_->pose.pose.position.y;
+        map_transform.transform.translation.x = odom_->pose.pose.position.x;
+        map_transform.transform.translation.y = odom_->pose.pose.position.y;
         map_transform.transform.translation.z = odom_->pose.pose.position.z;
 
         // Set rotation (quaternion)
