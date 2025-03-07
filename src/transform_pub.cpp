@@ -1,6 +1,7 @@
 #include <memory>
 #include <rclcpp/rclcpp.hpp>
 #include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/static_transform_broadcaster.h>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <nav_msgs/msg/odometry.hpp>
 
@@ -9,6 +10,7 @@ public:
     StaticTransformPublisher() : Node("tf_static_broadcaster")
     {
         tf_broadcaster_ = std::make_shared<tf2_ros::TransformBroadcaster>(this);
+        static_tf_broadcaster_ = std::make_shared<tf2_ros::StaticTransformBroadcaster>(this);
         odom_sub_ = this->create_subscription<nav_msgs::msg::Odometry>(
           "/dlio/odom_node/odom", 10, std::bind(&StaticTransformPublisher::odom_callback, this, std::placeholders::_1));
 
@@ -40,7 +42,7 @@ private:
         lidar_transform.transform.rotation.w = 1.0;
 
         // Broadcast the transform
-        tf_broadcaster_->sendTransform(lidar_transform);
+        static_tf_broadcaster_->sendTransform(lidar_transform);
 
         RCLCPP_INFO(this->get_logger(), "Published static transform from 'base_link' to 'os_sensor'");
     }
@@ -70,6 +72,7 @@ private:
     }
 
     std::shared_ptr<tf2_ros::TransformBroadcaster> tf_broadcaster_;
+    std::shared_ptr<tf2_ros::StaticTransformBroadcaster> static_tf_broadcaster_;
     rclcpp::Subscription<nav_msgs::msg::Odometry>::SharedPtr odom_sub_;
 
     nav_msgs::msg::Odometry::SharedPtr odom_;
