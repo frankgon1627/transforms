@@ -55,8 +55,8 @@ private:
         map_transform.child_frame_id = "base_link";   // Child frame
 
         // Set translation (x, y, z)
-        map_transform.transform.translation.x = odom_->-pose.pose.position.x;
-        map_transform.transform.translation.y = odom_->-pose.pose.position.y;
+        map_transform.transform.translation.x = -odom_->pose.pose.position.x;
+        map_transform.transform.translation.y = -odom_->pose.pose.position.y;
         map_transform.transform.translation.z = odom_->pose.pose.position.z;
 
         // Set rotation (quaternion)
