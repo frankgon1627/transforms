@@ -38,8 +38,8 @@ private:
         // Set rotation (quaternion)
         lidar_transform.transform.rotation.x = 0.0;
         lidar_transform.transform.rotation.y = 0.0;
-        lidar_transform.transform.rotation.z = 1.0;
-        lidar_transform.transform.rotation.w = 0.0;
+        lidar_transform.transform.rotation.z = 0.0;
+        lidar_transform.transform.rotation.w = 1.0;
 
         // Broadcast the transform
         static_tf_broadcaster_->sendTransform(lidar_transform);
