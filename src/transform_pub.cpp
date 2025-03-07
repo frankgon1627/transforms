@@ -50,7 +50,7 @@ private:
     void publish_map_transform(){
         geometry_msgs::msg::TransformStamped map_transform;
 
-        map_transform.header.stamp = this->get_clock()->now();
+        map_transform.header.stamp = odom_->header.stamp;
         map_transform.header.frame_id = "map";  // Parent frame
         map_transform.child_frame_id = "base_link";   // Child frame
 
